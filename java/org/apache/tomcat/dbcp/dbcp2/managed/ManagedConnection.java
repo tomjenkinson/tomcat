@@ -107,7 +107,7 @@ public class ManagedConnection<C extends Connection> extends DelegatingConnectio
             // return current connection to the pool
             final C connection = getDelegateInternal();
             setDelegate(null);
-            if (connection != null) {
+            if (connection != null && transactionContext.getSharedConnection() != connection) {
                 try {
                     pool.returnObject(connection);
                 } catch (final Exception ignored) {
